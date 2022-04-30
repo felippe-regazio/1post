@@ -22,10 +22,10 @@ function getPostFeed(postsDir) {
       const title = getPostTitle(postContent);
       const createdAt = getPostCreatedAt(postContent);
       
-      addPostEntry(feed, entry, title, createdAt);
+      feed.push(createFeedItem(entry, title, createdAt));
     });
 
-  return feed;
+  return sortFeedNewerFirst(feed);
 }
 
 
@@ -41,23 +41,46 @@ function getPostCreatedAt(postContent) {
   return new Date(createdAtStr);
 }
 
-function addPostEntry(feed = [], entry, title, createdAt) {
-  feed.push(`
-    <li style="list-style: none"> 
-      <article>
-        <a href="posts/${entry}">
-          <strong>§ ${title}</strong>
-        </a>
+function createFeedItem(entry, title, createdAt) {
+  return {
+    entry,
+    title,
+    createdAt,
+    html: `
+      <li style="list-style: none"> 
+        <article>
+          <a href="posts/${entry}">
+            <strong>§ ${title === 'Post Title' ? unslug(entry) : title}</strong>
+          </a>
+  
+          <p>${createdAt.toLocaleString(tinyBlogConfig.locale || 'pt-BR')}</p>
+        </article>
+      </li>
+    `
+  } 
+}
 
-        <p>${createdAt.toLocaleString(tinyBlogConfig.locale || 'pt-BR')}</p>
-      </article>
-    </li>
-  `)
+function sortFeedNewerFirst(feed) {
+  return feed.sort((a, b) => {
+    if (a.createdAt < b.createdAt) return 1;
+    if (a.createdAt > b.createdAt) return -1;
+
+    return 0;
+  });
+}
+
+function unslug(str) {
+  if (!str || typeof str !== 'string') {
+    return str;
+  }
+
+  return (str.substring(0, 1).toUpperCase() + str.substring(1)).replace(/-/g, ' ');
 }
 
 function generateIndex(postsFeed, replacements) {
+  const postsFeedHtml = postsFeed.map(item => item.html).join('\n');
   const indexTemplate = fs.readFileSync(path.resolve(`${cwd}`, 'template-index.html'), 'utf-8');
-  let index = indexTemplate.replace('{{posts_feed}}', postsFeed.join('\n'));
+  let index = indexTemplate.replace('{{posts_feed}}', postsFeedHtml);
 
   for(key in replacements) {
     index = index.replace(new RegExp(`{{${key}}}`, 'g'), replacements[key]);
@@ -73,4 +96,4 @@ const postsFeed = getPostFeed(postsDirectoryPath);
 const index = generateIndex(postsFeed, tinyBlogConfig);
 
 fs.writeFileSync(path.resolve(`${cwd}`, 'index.html'), index);
-console.log('Done. New blog index generated');
+console.log('New blog index page generated');

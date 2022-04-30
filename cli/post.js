@@ -61,3 +61,5 @@ fs.writeFileSync(`${postTargetDir}/index.html`, template);
 // done
 
 console.log(`Created new Post: "${postTargetDir}/index.html"`);
+require('./build');
+
