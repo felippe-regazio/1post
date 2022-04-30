@@ -37,22 +37,21 @@ if (!fs.existsSync(postTemplateFilePath)){
 
 let template = fs.readFileSync(postTemplateFilePath, 'utf-8');
 
-const templateTags = {
-  '{{date}}': createdAt.toLocaleString(tinyBlogConfig.date_locale || 'pt-BR')
+const templateReplacements = {
+  '{{date}}': createdAt.toLocaleString(tinyBlogConfig.locale || 'pt-BR'),
 };
 
 Object.keys(tinyBlogConfig).forEach(key => {
-  templateTags[`{{${key}}}`] = tinyBlogConfig[key];
+  templateReplacements[`{{${key}}}`] = tinyBlogConfig[key];
 });
 
-for(tag in templateTags) {
-  template = template.replace(new RegExp(tag, 'g'), templateTags[tag]);
+for(key in templateReplacements) {
+  template = template.replace(new RegExp(key, 'g'), templateReplacements[key]);
 }
 
-template += `
-<!--:::${createdAt}:::-->
-`;
+// add created-at comment footer
 
+template += `\n<!--:::${createdAt}:::-->`;
 
 // saving post
 
