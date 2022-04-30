@@ -1,5 +1,5 @@
 {
-  "name": "---",
+  "name": "1post",
   "version": "1.0.0",
   "description": "A tiny, fast and fun static site generator",
   "main": "index.js",
@@ -15,7 +15,8 @@
     "site",
     "generator",
     "blog",
-    "blogging"
+    "blogging",
+    "post"
   ],
   "author": "Felippe Regazio",
   "license": "MIT",
