@@ -1,0 +1,26 @@
+{
+  "name": "tinyblog",
+  "version": "1.0.0",
+  "description": "Tiny static site generator for tech blogs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felippe-regazio/felippe-regazio-blog.git"
+  },
+  "keywords": [
+    "static",
+    "site",
+    "generator",
+    "blog",
+    "blogging"
+  ],
+  "author": "Felippe Regazio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/felippe-regazio/felippe-regazio-blog/issues"
+  },
+  "homepage": "https://github.com/felippe-regazio/felippe-regazio-blog#readme"
+}
