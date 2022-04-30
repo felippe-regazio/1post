@@ -1,8 +1,8 @@
 {
+  "locale": "en",
   "title": "1POST",
   "subtitle": "A tiny, fast and fun static site generator for quick blogging",
   "author": "Felippe Regazio",
   "author_url": "https://cvkeep.com/felipperegazio",
   "no_posts_hint": "No posts yet",
-  "date_locale": "en"
 }
