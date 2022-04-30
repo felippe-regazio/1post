@@ -5,8 +5,7 @@ const postsDirectoryPath = path.resolve(cwd, 'posts');
 const blogConfig = require(`${cwd}/blog-config.json`);
 
 if (!fs.existsSync(postsDirectoryPath)) {
-  console.error('FAILED: Posts directory not found');
-  process.exit(1);
+  fs.mkdirSync(postsDirectoryPath);
 }
 
 // --------------------------------------
@@ -80,7 +79,7 @@ function unslug(str) {
 function generateIndex(postsFeed, replacements) {
   const postsFeedHtml = postsFeed.map(item => item.html).join('\n');
   const indexTemplate = fs.readFileSync(path.resolve(`${cwd}`, 'template-index.html'), 'utf-8');
-  let index = indexTemplate.replace('{{posts_feed}}', postsFeedHtml);
+  let index = indexTemplate.replace('{{posts_feed}}', postsFeedHtml || `<p>${blogConfig.no_posts_hint}</p>`);
 
   for(key in replacements) {
     index = index.replace(new RegExp(`{{${key}}}`, 'g'), replacements[key]);
