@@ -7,7 +7,7 @@ Usage:
 
 Commands:
   help: show this help
-  start: start a new 1post blog on the current folder
+  start: start a new blog on the current folder
   build: updates the blog index page feed with newer posts
   serve: serves the blog using http-serve (npx http-serve)
 
