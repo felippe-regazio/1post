@@ -5,6 +5,9 @@ const cwd = process.cwd();
 
 //  getting information
 
+const tinyBlogConfig = require(`${cwd}/tinyblog-config.json`);
+const createdAt = new Date().toLocaleString(tinyBlogConfig.date_locale || 'pr-BR');
+
 const postFileName = args[0];
 const postsDir = path.resolve(cwd, 'posts');
 const postTargetDir = path.resolve(cwd, `${postsDir}/${postFileName}`);
@@ -32,11 +35,10 @@ if (!fs.existsSync(postTemplateFilePath)){
 
 //  generating template
 
-const tinyBlogConfig = require(`${cwd}/tinyblog-config.json`);
 let template = fs.readFileSync(postTemplateFilePath, 'utf-8');
 
 const templateTags = {
-  '{{date}}': new Date()
+  '{{date}}': createdAt
 };
 
 Object.keys(tinyBlogConfig).forEach(key => {
@@ -46,6 +48,11 @@ Object.keys(tinyBlogConfig).forEach(key => {
 for(tag in templateTags) {
   template = template.replace(new RegExp(tag, 'g'), templateTags[tag]);
 }
+
+template += `
+<!--:::${createdAt}:::-->
+`;
+
 
 // saving post
 
