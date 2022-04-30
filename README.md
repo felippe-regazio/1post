@@ -1,3 +1,3 @@
-# Felippe Regazio Blog
+# TinyBlog
 
-My personal blog
+A tiny, fast and fun static site generator for quick blogging
