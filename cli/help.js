@@ -1,5 +1,5 @@
 console.log(`
-1POST is a CLI to create and manage very simple static generated blogs via NPX.
+1POST is a CLI to create and manage a very simple static generated blogs via NPX.
 For more information: https://github.com/felippe-regazio/1post
 
 Usage:
