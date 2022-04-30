@@ -5,8 +5,8 @@ const cwd = process.cwd();
 
 //  getting information
 
+const createdAt = new Date();
 const tinyBlogConfig = require(`${cwd}/tinyblog-config.json`);
-const createdAt = new Date().toLocaleString(tinyBlogConfig.date_locale || 'pr-BR');
 
 const postFileName = args[0];
 const postsDir = path.resolve(cwd, 'posts');
@@ -38,7 +38,7 @@ if (!fs.existsSync(postTemplateFilePath)){
 let template = fs.readFileSync(postTemplateFilePath, 'utf-8');
 
 const templateTags = {
-  '{{date}}': createdAt
+  '{{date}}': createdAt.toLocaleString(tinyBlogConfig.date_locale || 'pt-BR')
 };
 
 Object.keys(tinyBlogConfig).forEach(key => {
