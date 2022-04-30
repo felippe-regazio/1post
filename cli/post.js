@@ -29,7 +29,6 @@ if (fs.existsSync(postTargetDir)){
 
 if (!fs.existsSync(postTemplateFilePath)){
   console.error(`FAILED: File "template-post.html" not found on the current directory.`);
-  console.log('Run "npx b start" to start a b[log] project on this directory.');
   process.exit(1);
 }
 
