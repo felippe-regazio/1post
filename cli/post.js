@@ -6,7 +6,7 @@ const cwd = process.cwd();
 //  getting information
 
 const createdAt = new Date();
-const tinyBlogConfig = require(`${cwd}/tinyblog-config.json`);
+const blogConfig = require(`${cwd}/blog-config.json`);
 
 const postFileName = args[0];
 const postsDir = path.resolve(cwd, 'posts');
@@ -29,7 +29,7 @@ if (fs.existsSync(postTargetDir)){
 
 if (!fs.existsSync(postTemplateFilePath)){
   console.error(`FAILED: File "template-post.html" not found on the current directory.`);
-  console.log('Run "npx tinyblog start" to start a TinyBlog project on this directory.');
+  console.log('Run "npx b start" to start a b[log] project on this directory.');
   process.exit(1);
 }
 
@@ -38,11 +38,11 @@ if (!fs.existsSync(postTemplateFilePath)){
 let template = fs.readFileSync(postTemplateFilePath, 'utf-8');
 
 const templateReplacements = {
-  '{{date}}': createdAt.toLocaleString(tinyBlogConfig.locale || 'pt-BR'),
+  '{{date}}': createdAt.toLocaleString(blogConfig.locale || 'pt-BR'),
 };
 
-Object.keys(tinyBlogConfig).forEach(key => {
-  templateReplacements[`{{${key}}}`] = tinyBlogConfig[key];
+Object.keys(blogConfig).forEach(key => {
+  templateReplacements[`{{${key}}}`] = blogConfig[key];
 });
 
 for(key in templateReplacements) {

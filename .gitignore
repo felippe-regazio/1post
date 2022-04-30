@@ -103,9 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
-# Tiny Blog Generated Files
+# Blog Generated Files
 posts/**
-index.html
-template-index.html
-template-post.html
-tinyblog-config.json
+/index.html
+/template-index.html
+/template-post.html
+/blog-config.json

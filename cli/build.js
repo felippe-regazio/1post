@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const cwd = process.cwd();
 const postsDirectoryPath = path.resolve(cwd, 'posts');
-const tinyBlogConfig = require(`${cwd}/tinyblog-config.json`);
+const blogConfig = require(`${cwd}/blog-config.json`);
 
 if (!fs.existsSync(postsDirectoryPath)) {
   console.error('FAILED: Posts directory not found');
@@ -53,7 +53,7 @@ function createFeedItem(entry, title, createdAt) {
             <strong>§ ${title === 'Post Title' ? unslug(entry) : title}</strong>
           </a>
   
-          <p>${createdAt.toLocaleString(tinyBlogConfig.locale || 'pt-BR')}</p>
+          <p>${createdAt.toLocaleString(blogConfig.locale || 'pt-BR')}</p>
         </article>
       </li>
     `
@@ -93,7 +93,7 @@ function generateIndex(postsFeed, replacements) {
 // -------------------------------------- logics
 
 const postsFeed = getPostFeed(postsDirectoryPath);
-const index = generateIndex(postsFeed, tinyBlogConfig);
+const index = generateIndex(postsFeed, blogConfig);
 
 fs.writeFileSync(path.resolve(`${cwd}`, 'index.html'), index);
 console.log('New blog index page generated');
