@@ -9,4 +9,7 @@ fs.readdirSync(templateDir).forEach(fileName => {
   fs.copyFileSync(from, to);
 });
 
+// does a first build
+
+require('./build');
 console.log("Done. Happy blogging!");
