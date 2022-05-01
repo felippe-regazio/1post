@@ -57,7 +57,11 @@ function getPostMetaConfig(contentTemplate) {
     const metaConfigComment = getMetaConfigStr(contentTemplate);
     const metaConfigObject = metaConfigStrToObj(metaConfigComment);
 
-    return { ...blogConfig, ...metaConfigObject };
+    return {
+      ...blogConfig,
+      ...metaConfigObject,
+      post_created_at_formated: new Date(metaConfigObject.post_created_at).toLocaleString(blogConfig.blog_locale || 'en')
+    };
   } catch {
     console.error(`FATAL: Could not parse the meta information (<!--::: :::-->) for post: \n${postTemplateFilePath}`);
   }
@@ -72,11 +76,11 @@ function bindPostTemplateAndContent(postTemplate, contentTemplate) {
 
 function sortFeedNewerFirst(feed) {
   return feed.sort((a, b) => {
-    const dateA = new Date(a);
-    const dateB = new Date(b);
+    const dateA = new Date(a.info.post_created_at);
+    const dateB = new Date(b.info.post_created_at);
 
-    if (dateA.post_created_at < dateB.post_created_at) return 1;
-    if (dateA.post_created_at > dateB.post_created_at) return -1;
+    if (dateA < dateB) return 1;
+    if (dateA > dateB) return -1;
 
     return 0;
   });
@@ -109,21 +113,27 @@ fs.readdirSync(postsDir, { withFileTypes: true })
 // -------------------------------------- bulding index page
 
 const postsFeed = sortFeedNewerFirst(posts.map(entry => {
-  return `
-    <li style="list-style: none"> 
-      <article>
-        <a href="posts/${entry.entryName}">
-          <strong>§ ${entry.post_title}</strong>
-        </a>
-
-        <p>${new Date(entry.post_created_at).toLocaleString(blogConfig.blog_locale || 'en')}</p>
-      </article>
-    </li>
-  `
+  return {
+    info: entry,
+    html: `
+      <li style="list-style: none"> 
+        <article>
+          <a href="posts/${entry.entryName}">
+            <strong>§ ${entry.post_title}</strong>
+          </a>
+  
+          <p>${entry.post_created_at_formated}</p>
+        </article>
+      </li>
+    `
+  } 
 }));
 
 const indexTemplateContent = fs.readFileSync(indexTemplateFilePath, 'utf-8');
-let index = indexTemplateContent.replace('{{posts_feed}}', postsFeed.join('\n') || `<p>${blogConfig.blog_no_posts_hint}</p>`);
+const postsFeedHtml = postsFeed.map(item => item.html).join('\n');
+const noPostsHint = `<p>${blogConfig.blog_no_posts_hint}</p>`;
+
+let index = indexTemplateContent.replace('{{posts_feed}}', postsFeedHtml || noPostsHint);
 
 for(key in blogConfig) {
   index = index.replace(new RegExp(`{{${key}}}`, 'g'), blogConfig[key]);
