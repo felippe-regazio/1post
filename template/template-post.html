@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{blog_locale}}">
 <head>
-  <title>{{title}}</title>
+  <title>{{post_title}}</title>
   <meta charset="UTF-8">
   
   <!-- SEO -->
@@ -21,24 +21,24 @@
   <meta property="og:image" content=""/>
   <!--  -->
 
-  <meta http-equiv="Content-Language" content="{{locale}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Language" content="{{blog_locale}}">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" href="./favicon.png">
+  <link rel="icon" href="../favicon.png">
   <link href="https://unpkg.com/plume-css@1.0.11/lib/plume-all.css" rel="stylesheet" rel="preload" as="style" media="all" defer>
-  <link rel="stylesheet" href="https://unpkg.com/1post@1.0.3/themes/{{theme}}.css">
+  <link rel="stylesheet" href="https://unpkg.com/1post@1.0.3/themes/{{blog_theme}}.css">
 </head>
 <body class="plume">
   <div class="pm-container">
-    <h1>Post Title</h1>
-    <p><a href="/">← ← ←</a> &nbsp; {{date}}</p>
+    <h1>{{post_title}}</h1>
+    <p><a href="/">← ← ←</a> &nbsp; {{post_date}}</p>
 
-    <!-- Post Content -->
+    {{post}}
 
     <p>
-      <strong>Posted by: </strong>
-      <a href="{{author_url}}" target="_blank" rel="noreferrer noopener">{{author}}</a>
+      <strong>{{blog_posted_by_hint}}</strong>
+      <a href="{{blog_author_url}}" target="_blank" rel="noreferrer noopener">{{blog_author}}</a>
     </p>
   </div>
 </body>

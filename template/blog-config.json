@@ -1,9 +1,10 @@
 {
-  "locale": "en",
-  "title": "1POST",
-  "subtitle": "A tiny, fast and fun static site generator for quick blogging",
-  "theme": "default",
-  "author": "Felippe Regazio",
-  "author_url": "https://cvkeep.com/felipperegazio",
-  "no_posts_hint": "No posts yet"
+  "blog_locale": "en",
+  "blog_title": "1POST",
+  "blog_subtitle": "A tiny, fast and fun static site generator for quick blogging",
+  "blog_theme": "default",
+  "blog_author": "Felippe Regazio",
+  "blog_author_url": "https://cvkeep.com/felipperegazio",
+  "blog_no_posts_hint": "No posts yet",
+  "blog_posted_by_hint": "Posted by:"
 }

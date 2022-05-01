@@ -1,98 +1,135 @@
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const cwd = process.cwd();
-const postsDirectoryPath = path.resolve(cwd, 'posts');
+const postsDir = path.resolve(cwd, 'posts');
 const blogConfig = require(`${cwd}/blog-config.json`);
+const postTemplateFilePath = path.resolve(cwd, 'template-post.html');
+const indexTemplateFilePath = path.resolve(`${cwd}`, 'template-index.html');
 
-if (!fs.existsSync(postsDirectoryPath)) {
-  fs.mkdirSync(postsDirectoryPath);
+const cache = {};
+const posts = [];
+
+// -------------------------------------- initial checking
+
+if (!fs.existsSync(postTemplateFilePath)){
+  console.error(`FAILED: File "template-post.html" not found on the current directory.`);
+  process.exit(1);
 }
 
-// --------------------------------------
+if (!fs.existsSync(indexTemplateFilePath)){
+  console.error(`FAILED: File "template-index.html" not found on the current directory.`);
+  process.exit(1);
+}
 
-function getPostFeed(postsDir) {
-  const feed = [];
+if (!fs.existsSync(postsDir)) {
+  fs.mkdirSync(postsDir);
+}
+
+if (fs.existsSync(`${postsDir}/posts.json`)) {
+  try {
+    const postsJson = require(`${postsDir}/posts.json`);
+    Object.assign(cache, postsJson);
+  } catch {
+    console.warn('WARN: Could not retrieve posts,json, skipping cache.');
+    fs.unlinkSync(`${postsDir}/posts.json`);
+  }
+}
+
+// -------------------------------------- utils
+
+function getMetaConfigStr(contentTemplate) {
+  return contentTemplate
+    .match(/(<!--:::.*?:::-->)|(<!--:::[\S\s]+?:::-->)|(<!--:::[\S\s]*?$)/g)[0];
+}
+
+function metaConfigStrToObj(metaConfigComment) {
+  const metaConfigString = metaConfigComment
+  .replace('<!--:::', '')
+  .replace(':::-->', '')
+  .replace(/[\r\n]/gm, '');
+
+  return JSON.parse(metaConfigString);
+}
+
+function getPostMetaConfig(contentTemplate) {
+  try {
+    const metaConfigComment = getMetaConfigStr(contentTemplate);
+    const metaConfigObject = metaConfigStrToObj(metaConfigComment);
+
+    return { ...blogConfig, ...metaConfigObject };
+  } catch {
+    console.error(`FATAL: Could not parse the meta information (<!--::: :::-->) for post: \n${postTemplateFilePath}`);
+  }
+}
+
+function bindPostTemplateAndContent(postTemplate, contentTemplate) {
+  const metaConfigString = getMetaConfigStr(contentTemplate);
+  contentTemplate = contentTemplate.replace(metaConfigString, '');
   
-  fs.readdirSync(postsDir, { withFileTypes: true })
-    .filter(entry => entry.isDirectory())
-    .map(entry => entry.name)
-    .forEach(entry => {
-      const postContent = fs.readFileSync(`${postsDir}/${entry}/index.html`, 'utf-8');
-      const title = getPostTitle(postContent);
-      const createdAt = getPostCreatedAt(postContent);
-      
-      feed.push(createFeedItem(entry, title, createdAt));
-    });
-
-  return sortFeedNewerFirst(feed);
-}
-
-
-function getPostTitle(postContent) {
-  const titleH1Str = postContent.match(/<h1(.*?)<\/h1>/g)[0]
-  return titleH1Str ? titleH1Str.replace(/<\/?h1>/g,'').trim() : '';
-}
-
-function getPostCreatedAt(postContent) {
-  const createdAtComment = postContent.match(/<!--:::(.*?):::-->/g)[0];
-  const createdAtStr = createdAtComment && createdAtComment.replace('<!--:::', '').replace(':::-->', '');
-
-  return new Date(createdAtStr);
-}
-
-function createFeedItem(entry, title, createdAt) {
-  return {
-    entry,
-    title,
-    createdAt,
-    html: `
-      <li style="list-style: none"> 
-        <article>
-          <a href="posts/${entry}">
-            <strong>§ ${title === 'Post Title' ? unslug(entry) : title}</strong>
-          </a>
-  
-          <p>${createdAt.toLocaleString(blogConfig.locale || 'pt-BR')}</p>
-        </article>
-      </li>
-    `
-  } 
+  return postTemplate.replace('{{post}}', contentTemplate);
 }
 
 function sortFeedNewerFirst(feed) {
   return feed.sort((a, b) => {
-    if (a.createdAt < b.createdAt) return 1;
-    if (a.createdAt > b.createdAt) return -1;
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+
+    if (dateA.post_created_at < dateB.post_created_at) return 1;
+    if (dateA.post_created_at > dateB.post_created_at) return -1;
 
     return 0;
   });
 }
 
-function unslug(str) {
-  if (!str || typeof str !== 'string') {
-    return str;
-  }
+// -------------------------------------- bulding posts
 
-  return (str.substring(0, 1).toUpperCase() + str.substring(1)).replace(/-/g, ' ');
+fs.readdirSync(postsDir, { withFileTypes: true })
+  .filter(entry => entry.isDirectory())
+  .map(entry => entry.name)
+  .forEach(entry => {
+    const postTemplate = fs.readFileSync(postTemplateFilePath, 'utf-8');
+    const contentTemplate = fs.readFileSync(`${postsDir}/${entry}/post.html`, 'utf-8');
+    const postMetaConfig = getPostMetaConfig(contentTemplate);
+    let postContent = bindPostTemplateAndContent(postTemplate, contentTemplate);
+
+    for(key in postMetaConfig) {
+      postContent = postContent.replace(new RegExp(`{{${key}}}`, 'g'), postMetaConfig[key]);
+    }
+
+    posts.push({
+      ...postMetaConfig,
+      entryName: entry,
+      hash: crypto.createHash('md5').update(postContent).digest('hex')  
+    });
+
+    fs.writeFileSync(`${postsDir}/${entry}/index.html`, postContent);
+  });
+
+// -------------------------------------- bulding index page
+
+const postsFeed = sortFeedNewerFirst(posts.map(entry => {
+  return `
+    <li style="list-style: none"> 
+      <article>
+        <a href="posts/${entry.entryName}">
+          <strong>§ ${entry.post_title}</strong>
+        </a>
+
+        <p>${new Date(entry.post_created_at).toLocaleString(blogConfig.blog_locale || 'en')}</p>
+      </article>
+    </li>
+  `
+}));
+
+const indexTemplateContent = fs.readFileSync(indexTemplateFilePath, 'utf-8');
+let index = indexTemplateContent.replace('{{posts_feed}}', postsFeed.join('\n') || `<p>${blogConfig.blog_no_posts_hint}</p>`);
+
+for(key in blogConfig) {
+  index = index.replace(new RegExp(`{{${key}}}`, 'g'), blogConfig[key]);
 }
 
-function generateIndex(postsFeed, replacements) {
-  const postsFeedHtml = postsFeed.map(item => item.html).join('\n');
-  const indexTemplate = fs.readFileSync(path.resolve(`${cwd}`, 'template-index.html'), 'utf-8');
-  let index = indexTemplate.replace('{{posts_feed}}', postsFeedHtml || `<p>${blogConfig.no_posts_hint}</p>`);
-
-  for(key in replacements) {
-    index = index.replace(new RegExp(`{{${key}}}`, 'g'), replacements[key]);
-  }
-  
-  index += `\n<!--:::${new Date()}:::-->`;
-  return index;
-}
-
-// -------------------------------------- logics
-
-const postsFeed = getPostFeed(postsDirectoryPath);
-const index = generateIndex(postsFeed, blogConfig);
+// -------------------------------------- done
 
 fs.writeFileSync(path.resolve(`${cwd}`, 'index.html'), index);
-console.log('New blog index page generated');
+console.log('A new blog build has been generated. Done');
