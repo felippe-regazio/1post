@@ -1,0 +1,17 @@
+:root {
+  --pm-app-container-max-width: 760px;
+  --pm-primary-color: #00c2c7;
+  --pm-secondary-color: #00719c;
+  --pm-app-surface-color: #011f4b;
+  --pm-app-text-color: #fff;
+  --pm-button-min-width: 156px;
+  --pm-button-border-radius: 25px;
+  --pm-placeholder-color: #fafafa;
+  --pm-input-height: 46px;
+  --pm-input-border-style: none;
+  --pm-input-border-radius: 25px;
+  --pm-input-border-color: rgba(200,200,200,0.6);
+  --pm-pre-code-border-radius: 25px;
+  --pm-pre-code-background-color: #011f4b;
+  --pm-pre-padding: 16px 24px;
+}

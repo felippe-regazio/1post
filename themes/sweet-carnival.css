@@ -1,0 +1,21 @@
+:root {
+  --pm-app-container-max-width: 760px;
+  --pm-font-family-secondary: HelveticaNeue,Helvetica Neue,Helvetica,Arial,sans-serif;
+  --pm-primary-color: #90d2d8;
+  --pm-secondary-color: #f6a6b2;
+  --pm-color-success: #99cc99;
+  --pm-color-error: #ff7f7f;
+  --pm-color-warning: #ffd27f;
+  --pm-app-surface-color: transparent;
+  --pm-app-ground-color: transparent;
+  --pm-app-text-color: #555;
+  --pm-link-text-decoration: underline;
+  --pm-button-min-height: 48px;
+  --pm-button-border-radius: 25px;
+  --pm-input-height: 48px;
+  --pm-input-border-radius: 14px 0;
+  --pm-input-switch-size: 28px;
+  --pm-pre-code-border-radius: 14px 0;
+  --pm-pre-code-background-color: #a6dbdf;
+  --pm-pre-color: #333;
+}

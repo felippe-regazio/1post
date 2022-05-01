@@ -1,0 +1,8 @@
+:root {
+  --pm-app-container-max-width: 760px;
+  --pm-primary-color: #ea1b85;
+  --pm-secondary-color: #a3125d;
+  --pm-button-border-radius: 0px;
+  --pm-button-border-width: 2px;
+  --pm-input-border-width: 2px;
+}
