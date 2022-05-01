@@ -1,3 +1,3 @@
 const { exec } = require("child_process");
 
-exec(`npx http-server -o ${process.cwd()}`);
+exec(`npx http-server ${process.cwd()} -o`);
