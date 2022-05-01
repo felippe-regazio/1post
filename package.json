@@ -1,8 +1,11 @@
 {
   "name": "1post",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A tiny, fast and fun static site generator",
   "main": "index.js",
+  "bin": {
+    "1post": "./index.js"
+} ,
   "scripts": {
     "serve": "npx http-server -o"
   },
