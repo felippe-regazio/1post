@@ -60,13 +60,12 @@ function formatDate(dateStr, locale) {
   return new Date(dateStr).toLocaleString(locale);
 }
 
-function getPostMetaConfig(entry, contentTemplate) {
+function getContentTemplateConfig(entry, contentTemplate) {
   try {
     const metaConfigComment = getMetaConfigStr(contentTemplate);
     const metaConfigObject = metaConfigStrToObj(metaConfigComment);
 
     return {
-      ...blogConfig,
       ...metaConfigObject,
       entryName: entry,
       hash: hashContent(contentTemplate),
@@ -106,10 +105,10 @@ fs.readdirSync(postsDir, { withFileTypes: true })
   .map(entry => entry.name)
   .forEach(entry => {
     const contentTemplate = fs.readFileSync(`${postsDir}/${entry}/post.html`, 'utf-8');
-    const contentTemplateHash = hashContent(contentTemplate);
-    const postMetaConfig = getPostMetaConfig(entry, contentTemplate);
+    const contentTemplateConfig = getContentTemplateConfig(entry, contentTemplate);
 
-    if (!cache[entry] || cache[entry].hash !== postMetaConfig.hash) {
+    if (!cache[entry] || cache[entry].hash !== contentTemplateConfig.hash) {
+      const postMetaConfig = { ...blogConfig, contentTemplateConfig };
       const postTemplate = fs.readFileSync(postTemplateFilePath, 'utf-8');
       let postContent = bindPostTemplateAndContent(postTemplate, contentTemplate);
   
@@ -118,14 +117,14 @@ fs.readdirSync(postsDir, { withFileTypes: true })
       }
   
       posts.push(postMetaConfig);
-      cache[entry] = postMetaConfig;
+      cache[entry] = contentTemplateConfig;
 
       postContent = '<!-- This is an automatically generated file, do not edit it directly -->\n' + postContent;
       fs.writeFileSync(`${postsDir}/${entry}/index.html`, postContent);
-      console.log(`Created: "/posts/${entry}"`);
+      console.log(`* Created: "/posts/${entry}"`);
     } else {
-      console.log(`Skipped: "/posts/${entry}"`);
-      posts.push(cache[entry]);
+      console.log(`- Skipped: "/posts/${entry}"`);
+      posts.push({ ...blogConfig, ...cache[entry] });
     }
   });
 

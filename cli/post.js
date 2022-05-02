@@ -47,6 +47,4 @@ fs.writeFileSync(`${postTargetDir}/post.html`, `<!--:::{
 
 // -------------------------------------- done/build
 
-console.log(`Created new Post: "${postTargetDir}/"`);
-
 require('./build');
