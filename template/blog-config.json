@@ -2,7 +2,7 @@
   "blog_locale": "en",
   "blog_title": "1POST",
   "blog_description": "A tiny, fast and fun static site generator for quick blogging",
-  "blog_theme": "default-dark",
+  "blog_theme": "default",
   "blog_author": "Felippe Regazio",
   "blog_author_url": "https://cvkeep.com/felipperegazio",
   "blog_no_posts_hint": "No posts yet",

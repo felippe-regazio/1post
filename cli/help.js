@@ -3,7 +3,7 @@ console.log(`
 For more information: https://github.com/felippe-regazio/1post
 
 Usage:
-  npx 1post {command}|{postname}
+  npx 1post {command}|{postslug}
 
 Commands:
   help: show this help
@@ -12,5 +12,5 @@ Commands:
   serve: serves the blog locally under the localhost:8080 address
 
 Blogging:
-  To create a new post, just run "npx 1post {postname}"
+  To create a new post, just run "npx 1post {postslug}"
 `);
