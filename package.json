@@ -1,6 +1,6 @@
 {
   "name": "1post",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A tiny, fast and fun static site generator",
   "main": "index.js",
   "bin": {
