@@ -219,6 +219,10 @@ Everything in 1POST is just simple HTML combination and interpolation, there is 
 
 Your blog is a simple collection of static files, just drop its folder on the server and go get a coffee ;)
 
+## Contributing
+
+PR's are welcome. 1POST has a ridiculously simple code architecture, and its built under a dumb imperative paradigm. The index.js dispatch the commands, and all the commands logics are on the `cli` folder.
+
 ## 1POST Philosofy
 
 1POST is very small and really, i mean really simple. Is indicated if you want to write quick, pretty, fast and powerful HTML+CSS only posts, specially technical posts. All the posts will be on the same level in a unique list on the Home, and identified by Title and Date. 
