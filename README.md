@@ -81,7 +81,8 @@ This command must be executed only one time by folder. If you run it on a ready-
 blog/
   posts/
   blog-config.json
-  card.png
+  card.jpg
+  favicon.png
   index.html
   template-index.html
   template-post.html
@@ -123,6 +124,10 @@ That will be compiled to
 ```html
 <h3>Ruffus</h3>
 ```
+
+### favicon.png
+
+This is your blog favicon, change it as you wish.
 
 ### card.jpg
 
