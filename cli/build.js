@@ -26,17 +26,21 @@ if (!fs.existsSync(postsDir)) {
   fs.mkdirSync(postsDir);
 }
 
-if (fs.existsSync(`${postsDir}/posts.json`)) {
+if (fs.existsSync(`${postsDir}/cache.json`)) {
   try {
-    const postsJson = require(`${postsDir}/posts.json`);
-    Object.assign(cache, postsJson);
+    const cached = require(`${postsDir}/cache.json`);
+    Object.assign(cache, cached);
   } catch {
     console.warn('WARN: Could not retrieve posts,json, skipping cache.');
-    fs.unlinkSync(`${postsDir}/posts.json`);
+    fs.unlinkSync(`${postsDir}/cache.json`);
   }
 }
 
 // -------------------------------------- utils
+
+function hashContent(content) {
+  return crypto.createHash('md5').update(content).digest('hex');
+}
 
 function getMetaConfigStr(contentTemplate) {
   return contentTemplate
@@ -52,6 +56,10 @@ function metaConfigStrToObj(metaConfigComment) {
   return JSON.parse(metaConfigString);
 }
 
+function formatDate(dateStr, locale) {
+  return new Date(dateStr).toLocaleString(locale);
+}
+
 function getPostMetaConfig(entry, contentTemplate) {
   try {
     const metaConfigComment = getMetaConfigStr(contentTemplate);
@@ -61,9 +69,9 @@ function getPostMetaConfig(entry, contentTemplate) {
       ...blogConfig,
       ...metaConfigObject,
       entryName: entry,
+      hash: hashContent(contentTemplate),
       post_url: `${blogConfig.blog_url}/posts/${entry}`,
-      hash: crypto.createHash('md5').update(postContent).digest('hex'),
-      post_created_at_formated: new Date(metaConfigObject.post_created_at).toLocaleString(blogConfig.blog_locale || 'en')
+      post_created_at_formated: formatDate(metaConfigObject.post_created_at, blogConfig.blog_locale || 'en')
     }
   } catch {
     console.error(`FATAL (!): Could not parse the meta information (<!--::: :::-->) for post: \n${postTemplateFilePath}`);
@@ -97,18 +105,33 @@ fs.readdirSync(postsDir, { withFileTypes: true })
   .filter(entry => entry.isDirectory())
   .map(entry => entry.name)
   .forEach(entry => {
-    const postTemplate = fs.readFileSync(postTemplateFilePath, 'utf-8');
     const contentTemplate = fs.readFileSync(`${postsDir}/${entry}/post.html`, 'utf-8');
+    const contentTemplateHash = hashContent(contentTemplate);
     const postMetaConfig = getPostMetaConfig(entry, contentTemplate);
-    let postContent = bindPostTemplateAndContent(postTemplate, contentTemplate);
 
-    for(key in postMetaConfig) {
-      postContent = postContent.replace(new RegExp(`{{${key}}}`, 'g'), postMetaConfig[key]);
+    if (!cache[entry] || cache[entry].hash !== postMetaConfig.hash) {
+      const postTemplate = fs.readFileSync(postTemplateFilePath, 'utf-8');
+      let postContent = bindPostTemplateAndContent(postTemplate, contentTemplate);
+  
+      for(key in postMetaConfig) {
+        postContent = postContent.replace(new RegExp(`{{${key}}}`, 'g'), postMetaConfig[key]);
+      }
+  
+      posts.push(postMetaConfig);
+      cache[entry] = postMetaConfig;
+
+      postContent = '<!-- This is an automatically generated file, do not edit it directly -->\n' + postContent;
+      fs.writeFileSync(`${postsDir}/${entry}/index.html`, postContent);
+      console.log(`Created: "/posts/${entry}"`);
+    } else {
+      console.log(`Skipped: "/posts/${entry}"`);
+      posts.push(cache[entry]);
     }
-
-    posts.push(postMetaConfig);
-    fs.writeFileSync(`${postsDir}/${entry}/index.html`, postContent);
   });
+
+// -------------------------------------- saves the cache
+
+fs.writeFileSync(`${postsDir}/cache.json`, JSON.stringify(cache));
 
 // -------------------------------------- bulding index page
 
@@ -139,7 +162,9 @@ for(key in blogConfig) {
   index = index.replace(new RegExp(`{{${key}}}`, 'g'), blogConfig[key]);
 }
 
+index = '<!-- This is an automatically generated file, do not edit it directly -->\n' + index;
+
 // -------------------------------------- done
 
 fs.writeFileSync(path.resolve(`${cwd}`, 'index.html'), index);
-console.log('A new blog build has been generated. Done');
+console.log('\nBlog building done');
