@@ -211,6 +211,10 @@ You can preview any of this themes by visiting https://felippe-regazio.github.io
 
 Everything in 1POST is just simple HTML combination and interpolation, there is no complex building process, just add your assets as you would do on a normal HTML file. A tip: Try to keep header assets and script tags on the `template-*` files.
 
+## Cache
+
+1POST has a cache strategy to process only new and/or modified posts on a new build. If want to clean the cache and rebuild all the posts from scratch, just delete the file `/posts/cache.json`.
+
 ## Deploying
 
 Your blog is a simple collection of static files, just drop its folder on the server and go get a coffee ;)
