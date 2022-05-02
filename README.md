@@ -44,7 +44,7 @@ If you want to test the results, just type:
 1post serve
 ```
 
-This command will serve the current blog locally on port 8080 for tests purposes only.
+This command will serve the current blog locally with live server for tests purposes only.
 
 ## Commands
 
@@ -61,7 +61,7 @@ Commands:
   help: show this help
   start: start a new blog on the current folder
   build: updates the blog index page feed with newer posts
-  serve: serves the blog locally under the localhost:8080 address
+  serve: serves the blog locally with live server
 
 Blogging:
   To create a new post, just run "npx 1post {postslug}"
