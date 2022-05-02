@@ -52,7 +52,7 @@ function metaConfigStrToObj(metaConfigComment) {
   return JSON.parse(metaConfigString);
 }
 
-function getPostMetaConfig(contentTemplate) {
+function getPostMetaConfig(entry, contentTemplate) {
   try {
     const metaConfigComment = getMetaConfigStr(contentTemplate);
     const metaConfigObject = metaConfigStrToObj(metaConfigComment);
@@ -60,10 +60,15 @@ function getPostMetaConfig(contentTemplate) {
     return {
       ...blogConfig,
       ...metaConfigObject,
+      entryName: entry,
+      post_url: `${blogConfig.blog_url}/posts/${entry}`,
+      hash: crypto.createHash('md5').update(postContent).digest('hex'),
       post_created_at_formated: new Date(metaConfigObject.post_created_at).toLocaleString(blogConfig.blog_locale || 'en')
-    };
+    }
   } catch {
-    console.error(`FATAL: Could not parse the meta information (<!--::: :::-->) for post: \n${postTemplateFilePath}`);
+    console.error(`FATAL (!): Could not parse the meta information (<!--::: :::-->) for post: \n${postTemplateFilePath}`);
+
+    process.exit(1);
   }
 }
 
@@ -94,19 +99,14 @@ fs.readdirSync(postsDir, { withFileTypes: true })
   .forEach(entry => {
     const postTemplate = fs.readFileSync(postTemplateFilePath, 'utf-8');
     const contentTemplate = fs.readFileSync(`${postsDir}/${entry}/post.html`, 'utf-8');
-    const postMetaConfig = getPostMetaConfig(contentTemplate);
+    const postMetaConfig = getPostMetaConfig(entry, contentTemplate);
     let postContent = bindPostTemplateAndContent(postTemplate, contentTemplate);
 
     for(key in postMetaConfig) {
       postContent = postContent.replace(new RegExp(`{{${key}}}`, 'g'), postMetaConfig[key]);
     }
 
-    posts.push({
-      ...postMetaConfig,
-      entryName: entry,
-      hash: crypto.createHash('md5').update(postContent).digest('hex')  
-    });
-
+    posts.push(postMetaConfig);
     fs.writeFileSync(`${postsDir}/${entry}/index.html`, postContent);
   });
 
