@@ -1,6 +1,9 @@
 # 1POST
 
-A tiny, fast and fun static site generator for quick blogging. 1POST is written entirely in NodeJS and has no dependencies. You can install as a global package or run directly from NPX.
+A tiny, fast and fun static site generator for quick blogging. 1POST is written entirely in NodeJS and has no dependencies. You can install as a global package or run directly from NPX. This is the Lighthouse results for 1POST generated pages:
+
+
+<img width="566" style="margin: 0 auto; display: block" alt="Screen Shot 2022-05-02 at 03 00 52" src="https://user-images.githubusercontent.com/31618881/166191359-67e7e736-af0c-478d-a310-7434b90243b2.png">
 
 ## Installation
 
