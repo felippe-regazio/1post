@@ -8,7 +8,7 @@ Usage:
 Commands:
   help: show this help
   start: start a new blog on the current folder
-  build: updates the blog index page feed with newer posts
+  build: builds the blog. adding --force will skip cache
   serve: serves the blog locally with live server
 
 Blogging:

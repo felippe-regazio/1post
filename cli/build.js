@@ -26,7 +26,7 @@ if (!fs.existsSync(postsDir)) {
   fs.mkdirSync(postsDir);
 }
 
-if (fs.existsSync(`${postsDir}/cache.json`)) {
+if (fs.existsSync(`${postsDir}/cache.json`) && !process.argv.includes('--force')) {
   try {
     const cached = require(`${postsDir}/cache.json`);
     Object.assign(cache, cached);
