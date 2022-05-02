@@ -108,7 +108,7 @@ fs.readdirSync(postsDir, { withFileTypes: true })
     const contentTemplateConfig = getContentTemplateConfig(entry, contentTemplate);
 
     if (!cache[entry] || cache[entry].hash !== contentTemplateConfig.hash) {
-      const postMetaConfig = { ...blogConfig, contentTemplateConfig };
+      const postMetaConfig = { ...blogConfig, ...contentTemplateConfig };
       const postTemplate = fs.readFileSync(postTemplateFilePath, 'utf-8');
       let postContent = bindPostTemplateAndContent(postTemplate, contentTemplate);
   

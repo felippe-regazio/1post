@@ -1,7 +1,7 @@
 {
   "blog_locale": "en",
   "blog_title": "1POST",
-  "blog_subtitle": "A tiny, fast and fun static site generator for quick blogging",
+  "blog_description": "A tiny, fast and fun static site generator for quick blogging",
   "blog_theme": "default-dark",
   "blog_author": "Felippe Regazio",
   "blog_author_url": "https://cvkeep.com/felipperegazio",
