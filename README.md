@@ -206,6 +206,14 @@ You can preview any of this themes by visiting https://felippe-regazio.github.io
 
 1Post uses Plume-CSS for styling. Plume is a very simple, powerful and lightweight CSS-Only Microframework created by same creator of 1Post. So, anything Plume's can do, 1Post can also do. You can check Plume's documentation here: https://felippe-regazio.github.io/plume-css/.
 
+## Static Assets
+
+Everything in 1POST is just simple HTML combination and interpolation, there is no complex building process, just add your assets as you would do on a normal HTML file. A tip: Try to keep header assets and script tags on the `template-*` files.
+
+## Deploying
+
+Your blog is a simple collection of static files, just drop its folder on the server and go get a coffee ;)
+
 ## 1POST Philosofy
 
 1POST is very small and really, i mean really simple. Is indicated if you want to write quick, pretty, fast and powerful HTML+CSS only posts, specially technical posts. All the posts will be on the same level in a unique list on the Home, and identified by Title and Date. 
