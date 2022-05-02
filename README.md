@@ -75,7 +75,8 @@ To start a new blog, create a folder then run
 This command must be executed only one time by folder. If you run it on a ready-existent blog, your custom files will be overwrited. After run the command, you will see 5 new files and a `posts` folder.
 
 ```
-blog:
+blog/
+  posts/
   blog-config.json
   card.png
   index.html
@@ -147,8 +148,8 @@ To write a post, you must type `1post {postslug}`, where post slug will be the a
 A new folder `/posts/my-first-post` was created with the following files
 
 ```
-posts
-  my-first-post
+posts/
+  my-first-post/
     index.html
     post.html
 ```
