@@ -1,4 +1,16 @@
-const { exec } = require("child_process");
+const spawn = require('child_process').spawn;
+cmd = spawn('npx', ['live-server', process.cwd()]);
+cmd.stderr.on('data', data => console.log(data.toString()));
 
-console.log(`Starting new HTTP Server on localhost:8080...`);
-exec(`npx http-server ${process.cwd()} -a localhost -o`);
+let lock = false;
+
+cmd.stdout.on('data', data => {
+  const str = data.toString();
+  console.log(data.toString());
+
+  if (!lock && str && str.includes('Change detected')) {
+    lock = true;
+    require(`${__dirname}/build.js`);
+    lock = false;
+  }
+});
