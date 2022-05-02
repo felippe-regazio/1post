@@ -72,9 +72,9 @@ function getContentTemplateConfig(entry, contentTemplate) {
       post_url: `${blogConfig.blog_url}/posts/${entry}`,
       post_created_at_formated: formatDate(metaConfigObject.post_created_at, blogConfig.blog_locale || 'en')
     }
-  } catch {
-    console.error(`FATAL (!): Could not parse the meta information (<!--::: :::-->) for post: \n${postTemplateFilePath}`);
-
+  } catch(error) {
+    console.error(`FATAL (!): Could not parse the meta information (<!--::: :::-->) for post: \n${entry}`);
+    console.error(error);
     process.exit(1);
   }
 }
