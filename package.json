@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/felippe-regazio/felippe-regazio-blog.git"
+    "url": "git+https://github.com/felippe-regazio/1post.git"
   },
   "keywords": [
     "static",
@@ -24,7 +24,7 @@
   "author": "Felippe Regazio",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/felippe-regazio/felippe-regazio-blog/issues"
+    "url": "https://github.com/felippe-regazio/1post/issues"
   },
-  "homepage": "https://github.com/felippe-regazio/felippe-regazio-blog#readme"
+  "homepage": "https://github.com/felippe-regazio/1post#readme"
 }
