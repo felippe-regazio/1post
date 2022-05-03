@@ -28,6 +28,7 @@
   <link rel="icon" href="../../favicon.png">
   <link href="https://unpkg.com/plume-css@1.0.13/lib/plume-all.css" rel="stylesheet" rel="preload" as="style" media="all" defer>
   <link rel="stylesheet" href="https://unpkg.com/1post@1.0.3/themes/{{blog_theme}}.css">
+  <link href="https://unpkg.com/prismjs@1.28.0/themes/{{prism_theme}}.min.css" rel="stylesheet" />
 
   <style>
     :root {
@@ -54,5 +55,9 @@
     {{post}}
 
   </div>
+
+  <!-- Prism Code Highlighting -->
+  <script src="https://unpkg.com/prismjs@1.28.0/components/prism-core.min.js"></script>
+	<script src="https://unpkg.com/prismjs@1.28.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>

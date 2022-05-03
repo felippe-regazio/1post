@@ -103,6 +103,7 @@ This file is responsible for your global blog configurations, its entries are av
 |blog_no_posts_hint|Phrase to show when the blog list is empty|
 |blog_posted_by_hint|Phrase to but before credits, ex: "Posted by"|
 |blog_url|Your blog deployment URL, ex: "http://myblog.com"|
+|prism_theme|Your `Prism.js` code highlighting preffered theme, see the `Code Highlighting` section of this doc to know more|
 
 You can create new entries on this file, but you must not delete or ovewrite the existing ones. Let's imagine you created an entry called `dog_name` like this:
 
@@ -214,6 +215,41 @@ wooden-theme
 You can preview any of this themes by visiting https://felippe-regazio.github.io/plume-css/ and clicking on the button in left bottom corner of the screen. You can also create your own theme, if you desire to create your theme, please read the Plume-CSS documentation.
 
 1Post uses Plume-CSS for styling. Plume is a very simple, powerful and lightweight CSS-Only Microframework created by same creator of 1Post. So, anything Plume's can do, 1Post can also do. You can check Plume's documentation here: https://felippe-regazio.github.io/plume-css/.
+
+## Code Highlighting
+
+1Post uses Prism.js for blazing fast code highlighting of over 200 programming languages and markup.
+
+### Usage
+
+To activate code highligting, make sure your code is inside a `<code>` tag enclosed by a `<pre>` tag. To set the intended language, add a css class to your `<code>` tag using the following pattern: `language-xxxx`. (Eg. `language-python`, `language-rust`...)
+
+```
+<pre>
+  <code class="language-python">
+    print("Hello, 1Post!")
+  </code>
+</pre>
+```
+
+To learn more about what you can do with Prism.js and dive deep into its functionalities, please refer to the official [documentation](https://prismjs.com/).
+
+### Theming
+
+You can change your code highlighting theme on the file `blog-config.json` by editing the key `prism_theme`. It supports the following values:
+
+```
+prism
+prism-coy
+prism-dark
+prism-funky
+prism-okaidia
+prism-solarizedlight
+prism-tomorrow
+prism-twilight
+```
+
+To preview all themes and learn how to make your own, please refer to the official [documentation](https://prismjs.com/).
 
 ## Static Assets
 
