@@ -195,7 +195,7 @@ If you want to serve your blog for testing purposes, just run:
 1post serve
 ```
 
-## Theming
+## Blog Theming
 
 You can change your blog theme on the file `blog-config.json` by editing the key `theme`. It supports the following values:
 
@@ -234,7 +234,7 @@ To activate code highligting, make sure your code is inside a `<code>` tag enclo
 
 To learn more about what you can do with Prism.js and dive deep into its functionalities, please refer to the official [documentation](https://prismjs.com/).
 
-### Theming
+### Code Highlight Theming
 
 You can change your code highlighting theme on the file `blog-config.json` by editing the key `blog_prism_theme`. It supports the following values:
 
