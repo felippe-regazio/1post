@@ -8,5 +8,5 @@
   "blog_no_posts_hint": "No posts yet",
   "blog_posted_by_hint": "Posted by:",
   "blog_url": "https://blogcompleteurl.com",
-  "prism_theme": "prism-tomorrow"
+  "blog_prism_theme": "prism-tomorrow"
 }

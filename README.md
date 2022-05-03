@@ -103,7 +103,7 @@ This file is responsible for your global blog configurations, its entries are av
 |blog_no_posts_hint|Phrase to show when the blog list is empty|
 |blog_posted_by_hint|Phrase to but before credits, ex: "Posted by"|
 |blog_url|Your blog deployment URL, ex: "http://myblog.com"|
-|prism_theme|Your `Prism.js` code highlighting preffered theme, see the `Code Highlighting` section of this doc to know more|
+|blog_prism_theme|Your `Prism.js` code highlighting preffered theme, see the `Code Highlighting` section of this doc to know more|
 
 You can create new entries on this file, but you must not delete or ovewrite the existing ones. Let's imagine you created an entry called `dog_name` like this:
 
@@ -236,7 +236,7 @@ To learn more about what you can do with Prism.js and dive deep into its functio
 
 ### Theming
 
-You can change your code highlighting theme on the file `blog-config.json` by editing the key `prism_theme`. It supports the following values:
+You can change your code highlighting theme on the file `blog-config.json` by editing the key `blog_prism_theme`. It supports the following values:
 
 ```
 prism
