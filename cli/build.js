@@ -123,7 +123,6 @@ fs.readdirSync(postsDir, { withFileTypes: true })
       fs.writeFileSync(`${postsDir}/${entry}/index.html`, postContent);
       console.log(`* Created: "/posts/${entry}"`);
     } else {
-      console.log(`- Skipped: "/posts/${entry}"`);
       posts.push({ ...blogConfig, ...cache[entry] });
     }
   });
