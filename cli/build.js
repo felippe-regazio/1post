@@ -140,10 +140,11 @@ const postsFeed = sortFeedNewerFirst(posts.map(entry => {
       <li style="list-style: none"> 
         <article>
           <a href="posts/${entry.entryName}">
-            <strong>§ ${entry.post_title}</strong>
+            <p class="pm-h6 pm-no-margin"><strong>§ ${entry.post_title}</strong></p>
           </a>
-  
-          <p>${entry.post_created_at_formated}</p>
+          
+          <p class="pm-no-margin pm-text-lower">${entry.post_created_at_formated}</p>
+          <p>${entry.post_description}</p>
         </article>
       </li>
     `

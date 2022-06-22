@@ -10,7 +10,7 @@ if (!args[0]) {
 
 if (args[0] !== 'help' && args[0] !== 'start') {
   try {
-    require(`${cwd}/blog-config.json`);
+    require(`${process.cwd()}/blog-config.json`);
   } catch {
     console.log('\nWarning: Not a blog\n')
     console.log('Ops... 1Post configuration file not found.');
