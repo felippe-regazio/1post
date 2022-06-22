@@ -8,6 +8,18 @@ if (!args[0]) {
   process.exit(0);
 }
 
+if (args[0] !== 'help' && args[0] !== 'start') {
+  try {
+    require(`${cwd}/blog-config.json`);
+  } catch {
+    console.log('\nWarning: Not a blog\n')
+    console.log('Ops... 1Post configuration file not found.');
+    console.log('You are on a 1post project folder? If not, run "1post start" to create a new blog on this folder\n');
+  
+    process.exit(0);
+  }
+}
+
 commands.includes(args[0]) ?
   require(`./cli/${args[0]}.js`) :
   require('./cli/post.js');
