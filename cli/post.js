@@ -2,7 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const args = process.argv.slice(2);
 const cwd = process.cwd();
-const blogConfig = require(`${cwd}/blog-config.json`);
+
+try {
+  require(`${cwd}/blog-config.json`);
+} catch {
+  console.log('\nWarning: Not a blog\n')
+  console.log('Ops... 1Post configuration file not found.');
+  console.log('You are on a 1Post project folder? If not, run "1post start" to create a new blog on this folder\n');
+
+  process.exit(0);
+}
 
 // -------------------------------------- initial checking
 
