@@ -143,16 +143,16 @@ const postsFeed = sortFeedNewerFirst(posts.map(entry => {
             <p class="pm-h6 pm-no-margin"><strong>§ ${entry.post_title}</strong></p>
           </a>
           
-          <p class="pm-no-margin pm-text-lower">${entry.post_created_at_formated}</p>
           <p>${entry.post_description}</p>
+          <p class="pm-no-margin pm-text-right">${entry.post_created_at_formated}</p>
         </article>
       </li>
     `
-  } 
+  }
 }));
 
 const indexTemplateContent = fs.readFileSync(indexTemplateFilePath, 'utf-8');
-const postsFeedHtml = postsFeed.map(item => item.html).join('\n');
+const postsFeedHtml = `<ul>${postsFeed.map(item => item.html).join('\n')}</ul>`;
 const noPostsHint = `<p>${blogConfig.blog_no_posts_hint}</p>`;
 
 let index = indexTemplateContent.replace('{{posts_feed}}', postsFeedHtml || noPostsHint);
