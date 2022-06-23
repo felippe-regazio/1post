@@ -282,10 +282,6 @@ PR's are welcome. 1POST has a ridiculously simple code architecture, and its bui
 
 ## 1POST Philosophy
 
-1POST is very small and really, i mean really simple. It's recommended if you want to write quick, pretty, fast and powerful HTML+CSS only posts, specially technical posts. All the posts will be at the same level in a unique list on the Home page, and identified by Title and Date. 
+1POST is very small and really - i mean REALLY - simple. It's built to quick, pretty, fast and powerful blog writing, specially technical blogs. All the posts will be at the same level in a unique list at the Home page with an stupidly fast UI. Its mean to be like this. 
 
-1POST has no search bar, no tags, no footer, no header, no markdown, no JS frameworks, no JS at all, no complex categorization features, almost nothing; only the good and old HTML+CSS. When i said simple i mean: VERY simple (but powerful) blog. It has a fast CLI to manage Posts and Templates and build the blog, it also automatically configures: Style, Themes, Acessibility and SEO.
-
-1POST is recommended if you want a Content-First fast and quick blog with "as simple as possible" philosophy in mind. For example: we have a single post list on the Home beacause even if you have a 1.000 itens list there, the payload is smaller and faster than a entire JS framework and hundreds of JS code lines to create pagination and search which, for a single purpose of Content-First, its just too much.
-
-If you need more features, complex customizations, deep designed pages and a deeper kind of control and content categorization, 1POST it's not for yout, there is a plenty of other options out there that can suit your needs as a breeze and infinitelly better then 1POST. But if just want to quick blog your posts really quick with a cool design and a great performance, 1POST will make you happy.
+If you need more features, complex customizations, rich designed pages, deeper kind of control, content categorization, etc... 1POST it's not for you. There is a plenty of other options out there that can suit your needs as a breeze and infinitelly better then 1POST could do. But if just want to quick blog your posts with a cool and minimalist design and a great performance out of the box, 1POST will make you happy, for sure.
