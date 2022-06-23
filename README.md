@@ -46,7 +46,7 @@ If you want to test the results, just type:
 
 This command will serve the current blog locally with live server for tests purposes only.
 
-## Commands
+## Help && Commands
 
 1POST has 5 commands only, as mentioned on its help:
 
@@ -177,7 +177,7 @@ When opening your `post.html` you will see a strange notation at the top of the 
 
 You can also add new entries to the post-metada if you want, for example: `"favorite_food": "garlic"`, and then retrive its value on the post by interpolating `{{favorite_food}}`. You can also bring any value from the `blog-config.json` file by interpolation. After filling the post-metadata, just write your post as a simple and usual HTML file.
 
-## Building
+## Building the blog
 
 After writing or editing a post you must rebuild your blog,. To do it just run
 
@@ -187,7 +187,16 @@ After writing or editing a post you must rebuild your blog,. To do it just run
 
 This will reconstruct your index page with the new posts feed, and will also parse the new and modified posts. Remember to run this command before every deploy.
 
-## Serving
+## Removing Posts
+
+Delete the posts from your blog folder `/posts`. Now just rebuild your posts feed by running: 
+:
+
+```
+1post build --force
+```
+
+## Serving locally
 
 If you want to serve your blog for testing purposes, just run:
 
