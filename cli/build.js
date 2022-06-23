@@ -144,7 +144,7 @@ const postsFeed = sortFeedNewerFirst(posts.map(entry => {
           </a>
           
           <p>${entry.post_description}</p>
-          <p class="pm-no-margin pm-text-right pm-disabled">${entry.post_created_at_formated}</p>
+          <p class="pm-no-margin pm-disabled">${entry.post_created_at_formated}</p>
         </article>
       </li>
     `
