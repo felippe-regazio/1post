@@ -268,6 +268,10 @@ Everything in 1POST is just simple HTML combination and interpolation, there is 
 
 1POST has a cache strategy to process only new and/or modified posts on a new build. If want to clean the cache and rebuild all the posts from scratch, just delete the file `/posts/cache.json`.
 
+## Updating 1Post
+
+To update 1Post just run `npm install -g 1post`. Now go to your blog and run `1post build --force` to rebuild your posts feed with the newer features. Obs: You dont need to add --force argument to build new posts from here.
+
 ## Deploying
 
 Your blog is a simple collection of static files, just drop its folder on the server and go get a coffee ;)
