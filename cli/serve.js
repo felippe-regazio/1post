@@ -1,6 +1,6 @@
-const path = require('node:path');
-const { spawn } = require('node:child_process');
-const { writeFileSync, unlinkSync, readFileSync } = require('node:fs');
+const path = require('path');
+const { spawn } = require('child_process');
+const { writeFileSync, readFileSync } = require('fs');
 const blogIndex = path.resolve(process.cwd(), 'index.html');
 
 console.log('\nStarting the HTTP Server...');
