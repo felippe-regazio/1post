@@ -30,19 +30,21 @@ if (fs.existsSync(postTargetDir)){
 // -------------------------------------- saving new post.html file
 
 fs.mkdirSync(postTargetDir);
+const ext = args.includes('--md') ? 'md' : 'html';
 
-fs.writeFileSync(`${postTargetDir}/post.html`, `<!--:::{
+fs.writeFileSync(`${postTargetDir}/post.${ext}`, 
+`<!--:::{
   "post_title": "Post title",
   "post_description": "Post description",
   "post_created_at": "${new Date()}"
 }:::-->
 
-<p>
-  Your post content goes here, you dont need to create a post title element since it 
-  will be automatically added. You can interpolate any data from the post metadata 
-  notation or from your blog-config.json file using {{key}} notation.
-</p>
-`);
+${ext === 'html' ? '<pre>' : '```'}
+  Your post content goes here, you dont need to create a post 
+  title element since it  will be automatically added. You can 
+  interpolate any data from the post metadata notation or from 
+  your blog-config.json file using {{key}} notation.
+${ext === 'html' ? '</pre>\n' : '```'}`);
 
 // -------------------------------------- done/build
 
