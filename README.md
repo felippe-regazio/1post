@@ -46,6 +46,16 @@ If you want to test the results, just type:
 
 This command will serve the current blog locally with live server for tests purposes only.
 
+## Markdown
+
+If you prefer to write using markdown, just append the flag `--md` after your new post slug when creating a post. For example:
+
+```
+1post my-first-post --md
+```
+
+This will create a `post.md` file instead of an .html one on your post folder. Now you can write your post using markdown. You can also change a `post.html` file to a `post.md` file from any post at any moment and 1POST will start to automatically parse markdown for this post too.
+
 ## Help && Commands
 
 1POST has 5 commands only, as mentioned on its help:
