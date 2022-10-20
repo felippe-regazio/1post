@@ -5,7 +5,7 @@
   "main": "index.js",
   "bin": {
     "1post": "./index.js"
-} ,
+  },
   "scripts": {
     "serve": "npx http-server -o"
   },
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/felippe-regazio/1post/issues"
   },
-  "homepage": "https://github.com/felippe-regazio/1post#readme"
+  "homepage": "https://github.com/felippe-regazio/1post#readme",
+  "dependencies": {
+    "marked": "^4.1.1"
+  }
 }

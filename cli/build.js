@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const cwd = process.cwd();
+const marked = require('marked');
 const postsDir = path.resolve(cwd, 'posts');
 const blogConfig = require(`${cwd}/blog-config.json`);
 const postTemplateFilePath = path.resolve(cwd, 'template-post.html');
@@ -98,14 +99,20 @@ function sortFeedNewerFirst(feed) {
   });
 }
 
+function markdown(mdString) {
+  return marked.parse(mdString);
+}
+
 // -------------------------------------- bulding posts
 
 fs.readdirSync(postsDir, { withFileTypes: true })
   .filter(entry => entry.isDirectory())
   .map(entry => entry.name)
   .forEach(entry => {
-    const contentTemplate = fs.readFileSync(`${postsDir}/${entry}/post.html`, 'utf-8');
-    const contentTemplateConfig = getContentTemplateConfig(entry, contentTemplate);
+    const ext = fs.existsSync(`${postsDir}/${entry}/post.md`) ? 'md' : 'html';
+    const postContent = fs.readFileSync(`${postsDir}/${entry}/post.${ext}`, 'utf-8')
+    const contentTemplate = (ext === 'md' ? markdown(postContent) : postContent);
+    const contentTemplateConfig = getContentTemplateConfig(entry, postContent);
 
     if (!cache[entry] || cache[entry].hash !== contentTemplateConfig.hash) {
       const postMetaConfig = { ...blogConfig, ...contentTemplateConfig };
