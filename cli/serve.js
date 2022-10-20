@@ -13,12 +13,9 @@ spawn('npx', [ 'live-server', process.cwd() ])
       console.log(stdmsg);
     }
 
-    if (stdmsg.includes('post.html') || stdmsg.includes('template-')) {
-      spawn('1post', [ 'build' ])
-        .on('close', function(){
-          setTimeout(function() {
-            writeFileSync(blogIndex, readFileSync(blogIndex, 'utf-8'));
-          }, 500);
-        });
+    if (/post.[html|md]/gm.test(stdmsg) || stdmsg.includes('template-')) {
+      require('./build');
+      delete require.cache[require.resolve('./build')];
+      writeFileSync(blogIndex, readFileSync(blogIndex, 'utf-8'));
     }
-  })
+  });
