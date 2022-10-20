@@ -13,4 +13,5 @@ Commands:
 
 Blogging:
   To create a new post, just run "npx 1post {postslug}"
+  You can use --md option to write using markdown
 `);
